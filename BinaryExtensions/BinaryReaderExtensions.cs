@@ -9,10 +9,12 @@ namespace BinaryExtensions
     {
         public static void Seek(this BinaryReader reader, uint offset)
         {
-            reader.BaseStream.Position = (long)offset;
+            reader.Seek((long)offset);
         }
         public static void Seek(this BinaryReader reader, long offset)
         {
+            if (reader.BaseStream.Length <= offset)
+                throw new ArgumentOutOfRangeException("offset");
             reader.BaseStream.Position = offset;
         }
         public static string ReadString(this BinaryReader reader, uint count)
